@@ -8,7 +8,6 @@ namespace hg
 	Edge::Edge(const unsigned int id) :
 		e_Id(id)
 	{
-
 	}
 
 
@@ -21,20 +20,10 @@ namespace hg
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	const hg::ListVertex& Edge::getListVertex() const
+	{
+		return e_ListVertex;
+	}
 
 
 

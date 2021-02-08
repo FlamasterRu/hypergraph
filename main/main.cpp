@@ -22,6 +22,7 @@ int main()
 
     hg::Hypergraphe p;
 
+
     auto v1 = p.addVertex();
     auto e1 =p.addEdge();
 
@@ -34,6 +35,7 @@ int main()
 
     auto le = p.getEdgeList();
     auto lv = p.getVertexList();
+
 
     for (auto it = lv.begin(); it != lv.end(); ++it)
     {

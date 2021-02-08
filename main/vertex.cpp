@@ -8,7 +8,6 @@ namespace hg
 	Vertex::Vertex(const unsigned int id) :
 		v_Id(id)
 	{
-
 	}
 
 
@@ -21,38 +20,10 @@ namespace hg
 
 
 
-	const hg::ListEdge& Vertex::getListEdge()
+	const hg::ListEdge& Vertex::getListEdge() const
 	{
 		return v_ListEdge;
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
