@@ -11,13 +11,10 @@ namespace hg
 	}
 
 
-
-
 	const std::shared_ptr<Edge> Edge::createEdge(Hypergraphe& gr)
 	{
 		return gr.addEdge();
 	}
-
 
 
 	const hg::ListVertex& Edge::getListVertex() const
@@ -26,7 +23,10 @@ namespace hg
 	}
 
 
-
+	unsigned int Edge::getId() const
+	{
+		return e_Id;
+	}
 
 
 }	// namespace hypgr

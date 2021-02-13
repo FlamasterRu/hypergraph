@@ -29,6 +29,8 @@ namespace hg
 
 		static const std::shared_ptr<Vertex> createVertex(Hypergraphe& gr);
 
+		unsigned int getId() const;
+
 		const hg::ListEdge& getListEdge() const;
 
 		Vertex(const Vertex& v) = delete;

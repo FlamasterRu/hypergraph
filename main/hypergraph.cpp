@@ -93,6 +93,18 @@ namespace hg
 	}
 
 
+	unsigned int Hypergraphe::getVertexId(const std::shared_ptr<Vertex>& v) const
+	{
+		return v->getId();
+	}
+
+
+	unsigned int Hypergraphe::getEdgeId(const std::shared_ptr<Edge>& e) const
+	{
+		return e->getId();
+	}
+
+
 	const AdjacencyMatrix& Hypergraphe::getAdjacencyMatrix()
 	{
 		if (h_IsAdjacencyMatrixActual)
@@ -121,7 +133,7 @@ namespace hg
 
 
 	////////////////////	link vertex and edge
-	bool Hypergraphe::linkVertexAndEdge(const std::shared_ptr<Vertex> v, const std::shared_ptr<Edge> e)
+	bool Hypergraphe::linkVertexAndEdge(const std::shared_ptr<Vertex>& v, const std::shared_ptr<Edge>& e)
 	{
 		h_IsAdjacencyMatrixActual = false;
 
@@ -132,7 +144,7 @@ namespace hg
 	}
 
 
-	bool Hypergraphe::linkVertexToListEdge(const std::shared_ptr<Vertex> v, const hg::ListEdge& e)
+	bool Hypergraphe::linkVertexToListEdge(const std::shared_ptr<Vertex>& v, const hg::ListEdge& e)
 	{
 		h_IsAdjacencyMatrixActual = false;
 
@@ -146,7 +158,7 @@ namespace hg
 	}
 
 
-	bool Hypergraphe::linkEdgeToListVertex(const std::shared_ptr<Edge> e, const hg::ListVertex& v)
+	bool Hypergraphe::linkEdgeToListVertex(const std::shared_ptr<Edge>& e, const hg::ListVertex& v)
 	{
 		h_IsAdjacencyMatrixActual = false;
 
@@ -188,7 +200,7 @@ namespace hg
 
 
 
-
+	////////////////////
 	std::ostream& operator<< (std::ostream& out, Hypergraphe& h)
 	{
 		h.getAdjacencyMatrix();
@@ -212,8 +224,32 @@ namespace hg
 	}
 
 
-
-
+	bool Hypergraphe::isVertexInEdge(const std::shared_ptr<Vertex> v, const std::shared_ptr<Edge> e) const
+	{
+		bool temp(false);
+		if (v.get()->getListEdge().size() < e.get()->getListVertex().size())
+		{
+			for (auto it = v.get()->getListEdge().begin(); it != v.get()->getListEdge().end(); ++it)
+			{
+				if ((*it) == e)
+				{
+					temp = true;
+				}
+			}
+		}
+		else
+		{
+			for (auto it = e.get()->getListVertex().begin(); it != e.get()->getListVertex().end(); ++it)
+			{
+				if ((*it) == v)
+				{
+					temp = true;
+				}
+			}
+		}
+		return temp;
+	}
+	///////////////////////////////////////////////////////
 
 
 

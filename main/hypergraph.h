@@ -62,6 +62,9 @@ namespace hg
 		unsigned int getNumVertex() const;
 		unsigned int getNumEdge() const;
 
+		unsigned int getVertexId(const std::shared_ptr<Vertex>& v) const;
+		unsigned int getEdgeId(const std::shared_ptr<Edge>& e) const;
+
 		const std::shared_ptr<Vertex> getVertexByIndex(const unsigned int index) const;
 		const std::shared_ptr<Edge> getEdgeByIndex(const unsigned int index) const;
 		////////////////////////
@@ -69,11 +72,11 @@ namespace hg
 
 
 		///////		link vertex and edge
-		bool linkVertexAndEdge(const std::shared_ptr<Vertex> v, const std::shared_ptr<Edge> e);
+		bool linkVertexAndEdge(const std::shared_ptr<Vertex>& v, const std::shared_ptr<Edge>& e);
 
-		bool linkVertexToListEdge(const std::shared_ptr<Vertex> v, const hg::ListEdge& e);
+		bool linkVertexToListEdge(const std::shared_ptr<Vertex>& v, const hg::ListEdge& e);
 
-		bool linkEdgeToListVertex(const std::shared_ptr<Edge> e, const hg::ListVertex& v);
+		bool linkEdgeToListVertex(const std::shared_ptr<Edge>& e, const hg::ListVertex& v);
 
 		bool linkListVertex(const hg::ListVertex& v);
 
@@ -86,6 +89,8 @@ namespace hg
 
 		///////		
 		friend std::ostream& operator<< (std::ostream& out, Hypergraphe& h);
+
+		bool isVertexInEdge(const std::shared_ptr<Vertex> v, const std::shared_ptr<Edge> e) const;
 		////////////////////////
 
 

@@ -18,44 +18,63 @@
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    std::cout << "Start.\n";
 
     hg::Hypergraphe p;
 
 
-    auto v1 = p.addVertex();
-    auto e1 =p.addEdge();
+    // эквивалентная запись добавления
+    std::shared_ptr< hg::Vertex > v0 = p.addVertex();
+    auto v1 = hg::Vertex::createVertex(p);
+
+
+    std::shared_ptr< hg::Edge > e0 = p.addEdge();
 
     std::cout << p << std::endl;
-
-    auto v2 = hg::Vertex::createVertex(p);
+    p.linkVertexAndEdge(v0, e0);
     std::cout << p << std::endl;
-    auto e2 = hg::Edge::createEdge(p);
-    std::cout << p << std::endl;
-
-    auto le = p.getEdgeList();
-    auto lv = p.getVertexList();
-
-
-    for (auto it = lv.begin(); it != lv.end(); ++it)
-    {
-        (*it).get();
-    }
-
-    p.linkVertexAndEdge(v1, e1);
+    p.linkVertexAndEdge(v1, e0);
     std::cout << p << std::endl;
 
 
-    hg::ListVertex l1;
-    l1.push_back(hg::Vertex::createVertex(p));
-    l1.push_back(hg::Vertex::createVertex(p));
+    hg::ListVertex lv;
+    lv.push_back(p.addVertex());
+    lv.push_back(p.addVertex());
+    lv.push_back(p.addVertex());
 
     std::cout << p << std::endl;
-
-    p.linkEdgeToListVertex(e2, l1);
+    p.linkListVertex(lv);
     std::cout << p << std::endl;
 
+    hg::ListEdge le;
+    le.push_back(p.addEdge());
+    le.push_back(p.addEdge());
 
+    std::cout << p << std::endl;
+    p.linkVertexToListEdge(v0, le);
+    std::cout << p << std::endl;
 
-    std::cout << "Hello World!\n";
+    std::cout << v1->getId() << " " << p.getVertexId(v1) << std::endl;
+    std::cout << e0->getId() << " " << p.getEdgeId(e0) << std::endl;
+    std::cout << p.isVertexInEdge(v1, e0) << std::endl;
+
+    p.linkVertexToListEdge(p.getVertexByIndex(p.getNumVertex() - 1), le);
+    std::cout << p << std::endl;
+
+    std::cout << "End.\n";
 }
+
+
+
+
+
+
+// Добавить конструктор гиперграфа из матрицы смежности
+// Добавить mutex и noexept для работы с графом из нескольких потоков
+
+
+
+
+
+
+
