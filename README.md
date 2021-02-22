@@ -10,20 +10,20 @@
 это позволяет увеличить скорость доступа и поиска вершины или ребра.
 
 Основаная функциональность:
-Прежде всего нужно создать гиперграф: hg::Hypergraphe p; или auto p = new hg::Hypergraphe(); в зависимости от предполагаемого размера графа
-Для добавления вершин/рёбер используются методы: addVertex(), addEdge()
-Вершину и ребро можно связать напрямую: linkVertexAndEdge(vertex, edge)
-Или связать список вершин, при этом будет создано новое ребро: linkListVertex(listVertex), такой же метод есть для списка рёбер
-Можно связать список вершин с существующим ребром: linkEdgeToListVertex(edge, listVertex), такой же метод есть для списка рёбер
-Получить ребро/вершину можно по индексу: getVertexByIndex(int), getEdgeByIndex(int)
-Можно получить список всех вершин/рёбер: getVertexList(), getEdgeList()
-Метод getAdjacencyMatrix() возвращает матрицу смежности
-Чтобы проверить инцидентность вершины и ребра нужно использовать: isVertexInEdge(vertex, edge)
-Дополнительно рёбрам и вершинам можно присвоить вес: vertex.setWeight(int), edge.setWeight(int)
-или строку: vertex.setDataString(string), edge.setDataString(string)
-Для удобства отладки и изучения библиотеки был перегружен оператор вывода в поток матрицы смежности std::ostream& operator<< (std::ostream& out, Hypergraphe& h);
+Прежде всего нужно создать гиперграф: hg::Hypergraphe p; или auto p = new hg::Hypergraphe(); в зависимости от предполагаемого размера графа.
+Для добавления вершин/рёбер используются методы: addVertex(), addEdge().
+Вершину и ребро можно связать напрямую: linkVertexAndEdge(vertex, edge),
+Или связать список вершин, при этом будет создано новое ребро: linkListVertex(listVertex), такой же метод есть для списка рёбер.
+Можно связать список вершин с существующим ребром: linkEdgeToListVertex(edge, listVertex), такой же метод есть для списка рёбер.
+Получить ребро/вершину можно по индексу: getVertexByIndex(int), getEdgeByIndex(int).
+Можно получить список всех вершин/рёбер: getVertexList(), getEdgeList().
+Метод getAdjacencyMatrix() возвращает матрицу смежности.
+Чтобы проверить инцидентность вершины и ребра нужно использовать: isVertexInEdge(vertex, edge).
+Дополнительно рёбрам и вершинам можно присвоить вес: vertex.setWeight(int), edge.setWeight(int),
+или строку: vertex.setDataString(string), edge.setDataString(string).
+Для удобства отладки и изучения библиотеки был перегружен оператор вывода в поток матрицы смежности std::ostream& operator<< (std::ostream& out, Hypergraphe& h);.
 
-Каждая вершина/ребро обёрнуты в std::shared_ptr для удобства передачи в функции, не задумываясь о копиях
+Каждая вершина/ребро обёрнуты в std::shared_ptr для удобства передачи в функции, не задумываясь о копиях.
 
 Пример программы:
 #include <iostream>
