@@ -2,20 +2,6 @@
 #include "hypergraph.h"
 #include <iterator>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 int main()
 {
     std::cout << "Start.\n";
@@ -23,7 +9,7 @@ int main()
     hg::Hypergraphe p;
 
 
-    // эквивалентная запись добавления
+    // эквивалентная запись добавления вершины
     std::shared_ptr< hg::Vertex > v0 = p.addVertex();
     auto v1 = hg::Vertex::createVertex(p);
 
@@ -63,18 +49,3 @@ int main()
 
     std::cout << "End.\n";
 }
-
-
-
-
-
-
-// Добавить конструктор гиперграфа из матрицы смежности
-// Добавить mutex и noexept для работы с графом из нескольких потоков
-
-
-
-
-
-
-

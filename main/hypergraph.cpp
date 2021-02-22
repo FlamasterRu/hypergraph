@@ -3,23 +3,17 @@
 namespace hg
 {
 
-
 	//////////////////// constructor and destructor
 	Hypergraphe::Hypergraphe()
 	{
 		h_AdjacencyMatrixInt.resize(boost::extents[0][0]);
 	}
 
-
 	Hypergraphe::~Hypergraphe()
 	{
 
 	}
 	///////////////////////////////////////////////////////
-
-
-
-
 
 
 	////////////////////	add 
@@ -36,7 +30,6 @@ namespace hg
 		return temp;
 	}
 
-
 	const std::shared_ptr<Edge> Hypergraphe::addEdge()
 	{
 		h_IsAdjacencyMatrixActual = false;
@@ -52,58 +45,110 @@ namespace hg
 	///////////////////////////////////////////////////////
 
 
-
-
-
-
 	////////////////////	get
 	const std::shared_ptr<Vertex> Hypergraphe::getVertexByIndex(const unsigned int index) const
 	{
+		if (index >= h_NumOfVertex)
+		{
+			throw("index >= h_NumOfVertex");
+		}
 		return (*h_Index_Vertex.find(index)).second;
 	}
 
-
 	const std::shared_ptr<Edge> Hypergraphe::getEdgeByIndex(const unsigned int index) const
 	{
+		if (index >= h_NumOfEdge)
+		{
+			throw("index >= h_NumOfEdge");
+		}
 		return (*h_Index_Edge.find(index)).second;
 	}
-
 
 	const ListVertex& Hypergraphe::getVertexList() const
 	{
 		return const_cast<const ListVertex&>(h_ListVertex);
 	}
 
-
 	const ListEdge& Hypergraphe::getEdgeList() const
 	{
 		return const_cast<const ListEdge&>(h_ListEdge);
 	}
-
 
 	unsigned int Hypergraphe::getNumEdge() const
 	{
 		return h_ListEdge.size();
 	}
 
-
 	unsigned int Hypergraphe::getNumVertex() const
 	{
 		return h_ListVertex.size();
 	}
-
 
 	unsigned int Hypergraphe::getVertexId(const std::shared_ptr<Vertex>& v) const
 	{
 		return v->getId();
 	}
 
-
 	unsigned int Hypergraphe::getEdgeId(const std::shared_ptr<Edge>& e) const
 	{
 		return e->getId();
 	}
 
+	const std::string& Hypergraphe::getVertexDateString(const unsigned int index)
+	{
+		if (index >= h_NumOfVertex)
+		{
+			throw("index >= h_NumOfVertex");
+		}
+		return (*h_Index_Vertex.find(index)).second->getDateString();
+	}
+
+	const std::string& Hypergraphe::getVertexDateString(const std::shared_ptr<Vertex>& v)
+	{
+		return v->getDateString();
+	}
+
+	int Hypergraphe::getVertexWeight(const unsigned int index)
+	{
+		if (index >= h_NumOfVertex)
+		{
+			throw("index >= h_NumOfVertex");
+		}
+		return (*h_Index_Vertex.find(index)).second->getWeight();
+	}
+
+	int Hypergraphe::getVertexWeight(const std::shared_ptr<Vertex>& v)
+	{
+		return v->getWeight();
+	}
+
+	const std::string& Hypergraphe::getEgdeDateString(const unsigned int index)
+	{
+		if (index >= h_NumOfEdge)
+		{
+			throw("index >= h_NumOfEdge");
+		}
+		return (*h_Index_Edge.find(index)).second->getDateString();
+	}
+
+	const std::string& Hypergraphe::getEgdeDateString(const std::shared_ptr<Edge>& e)
+	{
+		return e->getDateString();
+	}
+
+	int Hypergraphe::getEdgeWeight(const unsigned int index)
+	{
+		if (index >= h_NumOfEdge)
+		{
+			throw("index >= h_NumOfEdge");
+		}
+		return (*h_Index_Edge.find(index)).second->getWeight();
+	}
+
+	int Hypergraphe::getEdgeWeight(const std::shared_ptr<Edge>& e)
+	{
+		return e->getWeight();
+	}
 
 	const AdjacencyMatrix& Hypergraphe::getAdjacencyMatrix()
 	{
@@ -128,10 +173,6 @@ namespace hg
 	///////////////////////////////////////////////////////
 
 
-
-
-
-
 	////////////////////	link vertex and edge
 	bool Hypergraphe::linkVertexAndEdge(const std::shared_ptr<Vertex>& v, const std::shared_ptr<Edge>& e)
 	{
@@ -142,7 +183,6 @@ namespace hg
 
 		return true;
 	}
-
 
 	bool Hypergraphe::linkVertexToListEdge(const std::shared_ptr<Vertex>& v, const hg::ListEdge& e)
 	{
@@ -157,7 +197,6 @@ namespace hg
 		return true;
 	}
 
-
 	bool Hypergraphe::linkEdgeToListVertex(const std::shared_ptr<Edge>& e, const hg::ListVertex& v)
 	{
 		h_IsAdjacencyMatrixActual = false;
@@ -171,7 +210,6 @@ namespace hg
 		return true;
 	}
 
-
 	bool Hypergraphe::linkListVertex(const hg::ListVertex& v)
 	{
 		h_IsAdjacencyMatrixActual = false;
@@ -181,7 +219,6 @@ namespace hg
 
 		return true;
 	}
-
 
 	bool Hypergraphe::linkListEdge(const hg::ListEdge& e)
 	{
@@ -193,11 +230,6 @@ namespace hg
 		return true;
 	}
 	///////////////////////////////////////////////////////
-
-
-
-
-
 
 
 	////////////////////
@@ -222,7 +254,6 @@ namespace hg
 		}
 		return out;
 	}
-
 
 	bool Hypergraphe::isVertexInEdge(const std::shared_ptr<Vertex> v, const std::shared_ptr<Edge> e) const
 	{
@@ -251,69 +282,4 @@ namespace hg
 	}
 	///////////////////////////////////////////////////////
 
-
-
-
-
-
-
 }	// namespace hypgr
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

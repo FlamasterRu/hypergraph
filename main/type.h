@@ -10,13 +10,9 @@
 namespace hg
 {
 
-
 	class Hypergraphe;
-
 	class Vertex;
-
 	class Edge;
-
 
 
 	typedef boost::multi_array< int, 2 >
@@ -34,12 +30,4 @@ namespace hg
 	typedef std::map< unsigned int, std::shared_ptr<Edge> >
 		EdgeByIndex;
 
-
-
-
-
-
 }	// namespace hypgr
-
-
-
