@@ -81,9 +81,9 @@ namespace hg
 
 		bool linkEdgeToListVertex(const std::shared_ptr<Edge>& e, const hg::ListVertex& v);
 
-		bool linkListVertex(const hg::ListVertex& v);
+		const std::shared_ptr<Edge>  linkListVertex(const hg::ListVertex& v);
 
-		bool linkListEdge(const hg::ListEdge& e);
+		const std::shared_ptr<Vertex>  linkListEdge(const hg::ListEdge& e);
 		////////////////////////
 
 

@@ -210,24 +210,24 @@ namespace hg
 		return true;
 	}
 
-	bool Hypergraphe::linkListVertex(const hg::ListVertex& v)
+	const std::shared_ptr<Edge>  Hypergraphe::linkListVertex(const hg::ListVertex& v)
 	{
 		h_IsAdjacencyMatrixActual = false;
 
 		auto temp = this->addEdge();
 		this->linkEdgeToListVertex(temp, v);
 
-		return true;
+		return temp;
 	}
 
-	bool Hypergraphe::linkListEdge(const hg::ListEdge& e)
+	const std::shared_ptr<Vertex>  Hypergraphe::linkListEdge(const hg::ListEdge& e)
 	{
 		h_IsAdjacencyMatrixActual = false;
 
 		auto temp = this->addVertex();
 		this->linkVertexToListEdge(temp, e);
 
-		return true;
+		return temp;
 	}
 	///////////////////////////////////////////////////////
 
