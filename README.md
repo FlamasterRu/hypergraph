@@ -26,11 +26,7 @@
 Каждая вершина/ребро обёрнуты в std::shared_ptr для удобства передачи в функции, не задумываясь о копиях.
 
 Пример программы:
-#include <iostream>
-#include "hypergraph.h"
 
-int main()
-{
     std::cout << "Start.\n";
 
     hg::Hypergraphe p;
@@ -72,4 +68,4 @@ int main()
     std::cout << p << std::endl;
 
     std::cout << "End.\n";
-}
+
