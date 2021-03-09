@@ -1,47 +1,115 @@
 ﻿#include <iostream>
 #include "hypergraph.h"
+#include <locale>
+#include <queue>
+#include <stack>
 
 int main()
 {
+    setlocale(LC_ALL, "rus");
     std::cout << "Start.\n";
 
     hg::Hypergraphe p;
-
-    // Эквивалентная запись добавления вершины
-    std::shared_ptr< hg::Vertex > v0 = p.addVertex();
-    auto v1 = hg::Vertex::createVertex(p);
-
-    std::shared_ptr< hg::Edge > e0 = p.addEdge();   // Добавляем ребро
-
-    std::cout << p << std::endl;
-    p.linkVertexAndEdge(v0, e0);    //Связываем вершину v0 и ребро e0
-    std::cout << p << std::endl;
-    p.linkVertexAndEdge(v1, e0);    //Связываем вершину v1 и ребро e0, таким образом v1 и v0 связаны ребром e0
-    std::cout << p << std::endl;
-
+    // Ввод гиперграфа
     hg::ListVertex lv;
     lv.push_back(p.addVertex());
     lv.push_back(p.addVertex());
     lv.push_back(p.addVertex());
+    p.linkListVertex(lv);
 
-    std::cout << p << std::endl;
-    p.linkListVertex(lv);   // Связываем список вершин, метод вернёт ребро, которое при выполнении будет создано
-    std::cout << p << std::endl;
+    lv.pop_front();
+    lv.pop_front();
+    lv.push_back(p.addVertex());
+    lv.push_back(p.addVertex());
 
-    hg::ListEdge le;
-    le.push_back(p.addEdge());
-    le.push_back(p.addEdge());
+    auto e2 = p.addEdge();
+    p.linkVertexAndEdge(p.getVertexByIndex(1), e2);
+    p.linkVertexAndEdge(p.addVertex(), e2);
 
-    std::cout << p << std::endl;
-    p.linkVertexToListEdge(v0, le); // Связываем списо рёбер с вершиной
-    std::cout << p << std::endl;
+    p.linkListVertex(lv);
 
-    std::cout << v1->getId() << " " << p.getVertexId(v1) << std::endl;  // Два способа получения id вершины, v1->getId() работает быстрее
-    std::cout << e0->getId() << " " << p.getEdgeId(e0) << std::endl;
-    std::cout << p.isVertexInEdge(v1, e0) << std::endl;     // Проверка инцидентности  v1 и e0
+    p.addVertex();
+    p.addVertex();
 
-    p.linkVertexToListEdge(p.getVertexByIndex(p.getNumVertex() - 1), le);
-    std::cout << p << std::endl;
+    auto e4 = p.addEdge();
+    p.linkVertexAndEdge(p.getVertexByIndex(4), e4);
+    p.linkVertexAndEdge(p.getVertexByIndex(6), e4);
+
+    lv.clear();
+    for (int i = 4; i < p.getNumVertex(); ++i)
+    {
+        lv.push_back(p.getVertexByIndex(i));
+    }
+    p.linkListVertex(lv);
+    ///
+
+    std::cout << "Все индексы вершин: ";
+    hg::ListVertex listVertex = p.getVertexList();
+    for (auto vertex : listVertex)
+    {
+        std::cout << vertex->getId() << " ";
+    }
+    std::cout << std::endl;
+
+    // Обход в ширину начиная с нулевой вершины
+    std::queue<int> que;
+    que.push(0);
+    p.getVertexByIndex(0)->setDataString("passed");
+    std::cout << "Обход в ширину: ";
+    while (que.size() != 0)
+    {
+        int currentVertex = que.front();
+        que.pop();
+        std::cout << currentVertex << " ";
+
+        hg::ListEdge listEdge = p.getVertexByIndex(currentVertex)->getListEdge();
+        for (auto edge : listEdge)
+        {
+            hg::ListVertex l = edge->getListVertex();
+            for (auto vertex : l)
+            {
+                if (vertex->getDateString() != "passed")
+                {
+                    que.push(vertex->getId());
+                    vertex->setDataString("passed");
+                }
+            }
+        }
+    }
+    std::cout << std::endl;
+
+    // стираем отметки о прохождении
+    for (auto vertex : listVertex)
+    {
+        vertex->setDataString("");
+    }
+
+    // Обход в глубину начиная с нулевой вершины
+    std::stack<int> st;
+    st.push(0);
+    p.getVertexByIndex(0)->setDataString("passed");
+    std::cout << "Обход в глубину: ";
+    while (st.size() != 0)
+    {
+        int currentVertex = st.top();
+        st.pop();
+        std::cout << currentVertex << " ";
+
+        hg::ListEdge listEdge = p.getVertexByIndex(currentVertex)->getListEdge();
+        for (auto edge : listEdge)
+        {
+            hg::ListVertex l = edge->getListVertex();
+            for (auto vertex : l)
+            {
+                if (vertex->getDateString() != "passed")
+                {
+                    st.push(vertex->getId());
+                    vertex->setDataString("passed");
+                }
+            }
+        }
+    }
+    std::cout << std::endl;
 
     std::cout << "End.\n";
 }
