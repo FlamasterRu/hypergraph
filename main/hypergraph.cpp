@@ -1,4 +1,6 @@
 #include "hypergraph.h"
+#include <iostream>
+#include <fstream>
 
 namespace hg
 {
@@ -7,6 +9,110 @@ namespace hg
 	Hypergraphe::Hypergraphe()
 	{
 		h_AdjacencyMatrixInt.resize(boost::extents[0][0]);
+	}
+
+	Hypergraphe::Hypergraphe(const AdjacencyMatrix& matrix)
+	{
+		int n_row = matrix.end() - matrix.begin();
+		auto row = matrix.begin();
+		int n_col = row->end() - row->begin();
+
+		for (int i = 0; i < n_row; ++i)
+		{
+			this->addVertex();
+		}
+		for (int i = 0; i < n_col; ++i)
+		{
+			this->addEdge();
+		}
+		for (int i = 0; i < n_row; ++i)
+		{
+			for (int j = 0; j < n_col; ++j)
+			{
+				if (matrix[i][j] == 1)
+				{
+					this->linkVertexAndEdge((*this)(i), (*this)[j]);
+				}
+			}
+		}
+	}
+
+	Hypergraphe::Hypergraphe(const std::string fileName)
+	{
+		std::ifstream file(fileName);
+		if (!file.is_open())
+		{
+			throw("Can't open input file.\n");
+		}
+		int n_row, n_col;
+		file >> n_row >> n_col;
+		if (n_row <= 0)
+		{
+			throw("Incorrect row size in input file.\n");
+		}
+		if (n_col <= 0)
+		{
+			throw("Incorrect col size in input file.\n");
+		}
+		for (int i = 0; i < n_row; ++i)
+		{
+			this->addVertex();
+		}
+		for (int i = 0; i < n_col; ++i)
+		{
+			this->addEdge();
+		}
+		for (int i = 0; i < n_row; ++i)
+		{
+			for (int j = 0; j < n_col; ++j)
+			{
+				int temp;
+				file >> temp;
+				if (temp == 1)
+				{
+					this->linkVertexAndEdge((*this)(i), (*this)[j]);
+				}
+			}
+		}
+	}
+
+	Hypergraphe::Hypergraphe(const Hypergraphe& h)
+	{
+		for (int i = 0; i < h.getNumVertex(); ++i)
+		{
+			this->addVertex();
+			(*this)(i)->setDataString(h(i)->getDateString());
+			(*this)(i)->setWeight(h(i)->getWeight());
+		}
+		for (int i = 0; i < h.getNumEdge(); ++i)
+		{
+			this->addEdge();
+			(*this)[i]->setDataString(h[i]->getDateString());
+			(*this)[i]->setWeight(h[i]->getWeight());
+		}
+		for (int i = 0; i < h.getNumVertex(); ++i)
+		{
+			for (int j = 0; j < h.getNumEdge(); ++j)
+			{
+				if (h.isVertexInEdge( h(i), h[j]))
+				{
+					this->linkVertexAndEdge((*this)(i), (*this)[j]);
+				}
+			}
+		}
+	}
+
+	Hypergraphe& Hypergraphe::operator= (const Hypergraphe& h)
+	{
+		h_AdjacencyMatrixInt.resize(boost::extents[h.getNumVertex()][h.getNumEdge()]);
+		this->h_Index_Edge = h.h_Index_Edge;
+		this->h_Index_Vertex = h.h_Index_Vertex;
+		this->h_IsAdjacencyMatrixActual = false;
+		this->h_ListEdge = h.h_ListEdge;
+		this->h_ListVertex = h.h_ListVertex;
+		this->h_NumOfEdge = h.h_NumOfEdge;
+		this->h_NumOfVertex = h.h_NumOfVertex;
+		return *this;
 	}
 
 	Hypergraphe::~Hypergraphe()
@@ -56,6 +162,24 @@ namespace hg
 	}
 
 	const std::shared_ptr<Edge> Hypergraphe::getEdgeByIndex(const unsigned int index) const
+	{
+		if (index >= h_NumOfEdge)
+		{
+			throw("index >= h_NumOfEdge");
+		}
+		return (*h_Index_Edge.find(index)).second;
+	}
+
+	const std::shared_ptr<Vertex> Hypergraphe::operator ()(const unsigned int index) const
+	{
+		if (index >= h_NumOfVertex)
+		{
+			throw("index >= h_NumOfVertex");
+		}
+		return (*h_Index_Vertex.find(index)).second;
+	}
+
+	const std::shared_ptr<Edge> Hypergraphe::operator [](const unsigned int index) const
 	{
 		if (index >= h_NumOfEdge)
 		{

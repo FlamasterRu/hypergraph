@@ -3,6 +3,7 @@
 #include <locale>
 #include <queue>
 #include <stack>
+#include <chrono>
 
 int main()
 {
@@ -10,6 +11,7 @@ int main()
     std::cout << "Start.\n";
 
     hg::Hypergraphe p;
+
     // Ввод гиперграфа
     hg::ListVertex lv;
     lv.push_back(p.addVertex());
@@ -44,14 +46,20 @@ int main()
     ///
 
     std::cout << "Все индексы вершин: ";
-    hg::ListVertex listVertex = p.getVertexList();
-    for (auto vertex : listVertex)
+    for (int i = 0; i < p.getNumVertex(); ++i)
     {
-        std::cout << vertex->getId() << " ";
+        std::cout << p(i)->getId() << " ";
+    }
+    std::cout << std::endl;
+    std::cout << "Все индексы рёбер: ";
+    for (int i = 0; i < p.getNumEdge(); ++i)
+    {
+        std::cout << p[i]->getId() << " ";
     }
     std::cout << std::endl;
 
     // Обход в ширину начиная с нулевой вершины
+    hg::ListVertex listVertex = p.getVertexList();
     std::queue<int> que;
     que.push(0);
     p.getVertexByIndex(0)->setDataString("passed");
@@ -110,6 +118,13 @@ int main()
         }
     }
     std::cout << std::endl;
+
+    hg::Hypergraphe p2 = p;
+    std::cout << p << std::endl;
+    std::cout << p2 << std::endl;
+
+    hg::Hypergraphe p3("input.txt");
+    std::cout << p3 << std::endl;
 
     std::cout << "End.\n";
 }

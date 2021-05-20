@@ -18,6 +18,8 @@ namespace hg
 	typedef boost::multi_array< int, 2 >
 		AdjacencyMatrix;
 
+	typedef AdjacencyMatrix::index index;
+
 	typedef std::list< std::shared_ptr<Vertex> >
 		ListVertex;
 

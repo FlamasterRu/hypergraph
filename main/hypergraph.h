@@ -31,12 +31,14 @@ namespace hg
 
 		/////// constructor and destructor
 		Hypergraphe();
+		Hypergraphe(const AdjacencyMatrix& matrix);	// создаёт гиперграф такого же строения, что в matrix
+		Hypergraphe(const std::string fileName);	// считывает матрицу смежности из файла
 
 		~Hypergraphe();
 
-		Hypergraphe(const Hypergraphe& h) = delete;
+		Hypergraphe(const Hypergraphe& h);
 		Hypergraphe(const Hypergraphe&& h) = delete;
-		Hypergraphe& operator= (const Hypergraphe& h) = delete;
+		Hypergraphe& operator= (const Hypergraphe& h);
 		////////////////////////
 
 
@@ -71,6 +73,9 @@ namespace hg
 
 		const std::shared_ptr<Vertex> getVertexByIndex(const unsigned int index) const;
 		const std::shared_ptr<Edge> getEdgeByIndex(const unsigned int index) const;
+
+		const std::shared_ptr<Vertex> operator ()(const unsigned int index) const;
+		const std::shared_ptr<Edge> operator [](const unsigned int index) const;
 		////////////////////////
 
 
